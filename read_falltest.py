@@ -61,4 +61,5 @@ axs[1].set_ylabel('Column Mass ($g\ cm^{-2}$)')
 axs[1].grid()
 
 plt.tight_layout()
+plt.savefig('read_falltest.png')
 plt.show()
