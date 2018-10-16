@@ -6,9 +6,13 @@ This project includes example output files for each of the implemented tests. To
 
 `python read_[test].py`
 
-This will show the figure as well as save it to a png under the name read_[test].png. 
+This will show the figure as well as save it to a png under the name read_[test].png.
 
 Note: [test] should be replaced with the name of the test in all above examples.
+
+## Implemented tests:
+
+carma_falltest.F90, carma_sigmafalltest.F90, carma_nuctest.F90
 
 ## Required python libraries:
 [netCDF4](http://unidata.github.io/netcdf4-python/)
