@@ -48,7 +48,9 @@ gerb_bins_mmr = np.zeros((len(bin_names), len(time), len(height))) # (kg/kg) mmr
 # Loop over variables to fill number densities
 for i, bin_name in zip(range(len(bin_names)), bin_names):
     bins_mmr[i,:,:] = nc_file.variables[bin_name][:,:]
+for i, bin_name in zip(range(len(bin_names)), fitz_bin_names):
     fitz_bins_mmr[i,:,:] = nc_file.variables[bin_name][:,:]
+for i, bin_name in zip(range(len(bin_names)), gerb_bin_names):
     gerb_bins_mmr[i,:,:] = nc_file.variables[bin_name][:,:]
 
 # Summing & Averaging
@@ -57,12 +59,15 @@ fitz_mmr_profile = np.sum(fitz_bins_mmr, axis=0)
 gerb_mmr_profile = np.sum(gerb_bins_mmr, axis=0)
 
 fig, axs = plt.subplots(1, 3, figsize=(10,5))
-axs[0].semilogx(mmr_profile[0,:], height, label='t=0')
-axs[1].semilogx(fitz_mmr_profile[0,:], height, label='t=0')
-axs[2].semilogx(gerb_mmr_profile[0,:], height, label='t=0')
-axs[0].semilogx(mmr_profile[-1,:], height, label='t=final')
-axs[1].semilogx(fitz_mmr_profile[-1,:], height, label='t=final')
-axs[2].semilogx(gerb_mmr_profile[-1,:], height, label='t=final')
+axs[0].semilogx(mmr_profile[0,:], height, label='None')
+axs[0].semilogx(fitz_mmr_profile[0,:], height, label='Fitz')
+axs[0].semilogx(gerb_mmr_profile[0,:], height, label='Gerb')
+axs[1].semilogx(mmr_profile[-100,:], height, label='None')
+axs[1].semilogx(fitz_mmr_profile[-100,:], height, label='Fitz')
+axs[1].semilogx(gerb_mmr_profile[-100,:], height, label='Gerber')
+axs[2].semilogx(mmr_profile[-1,:], height, label='None')
+axs[2].semilogx(fitz_mmr_profile[-1,:], height, label='Fitz')
+axs[2].semilogx(gerb_mmr_profile[-1,:], height, label='Gerber')
 axs[0].invert_yaxis()
 axs[1].invert_yaxis()
 axs[2].invert_yaxis()
@@ -72,15 +77,18 @@ axs[2].set_ylabel('hPa')
 axs[0].set_xlabel('Aerosol MMR (kg/kg)')
 axs[1].set_xlabel('Aerosol MMR (kg/kg)')
 axs[2].set_xlabel('Aerosol MMR (kg/kg)')
-axs[0].set_title('None')
-axs[1].set_title('Fitz')
-axs[2].set_title('Gerb')
+axs[0].set_title('t=0')
+axs[1].set_title('t=something')
+axs[2].set_title('t=final')
 axs[0].legend()
 axs[1].legend()
 axs[2].legend()
 axs[0].grid()
 axs[1].grid()
 axs[2].grid()
+axs[0].set_xlim(1e-12, 5e-9)
+axs[1].set_xlim(1e-12, 5e-9)
+axs[2].set_xlim(1e-12, 5e-9)
 plt.tight_layout()
 plt.savefig('read_swelltest.png')
 plt.show()
